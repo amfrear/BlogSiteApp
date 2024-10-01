@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<div class="container mt-5">
+		<!-- Navigation Section -->
+		<header class="d-flex justify-content-between align-items-center mb-4">
+			<h1 th:text="${post.title}">Post Title</h1>
+			<nav>
+				<a th:href="@{/home}" class="btn btn-primary">Home</a>
+				<a th:href="@{/profile}" class="btn btn-secondary">Profile</a>
+				<a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+			</nav>
+		</header>
+
+		<!-- Post Content Section -->
+		<p th:text="${post.content}">Post Content</p>
+
+		<!-- Display the comments for this post -->
+		<h3>Comments</h3>
+		<ul>
+			<li th:each="comment : ${post.comments}">
+				<strong th:text="${comment.author.username}">Author</strong>:
+				<span th:text="${comment.content}">Comment Content</span>
+				<span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+				<div th:if="${comment.author.email == session.loggedInUserEmail}">
+					<!-- Edit button -->
+					<a th:href="@{/posts/{postId}/comments/edit/{commentId}(postId=${post.postId}, commentId=${comment.commentId})}"
+						class="btn btn-sm btn-warning">Edit</a>
+
+					<!-- Delete button -->
+					<form
+						th:action="@{/posts/{postId}/comments/{commentId}/delete(postId=${post.postId}, commentId=${comment.commentId})}"
+						method="post" style="display:inline;">
+						<button type="submit" class="btn btn-sm btn-danger">Delete</button>
+					</form>
+				</div>
+			</li>
+		</ul>
+
+		<!-- Show a message if no comments are available -->
+		<div th:if="${post.comments.empty}">
+			<p>No comments yet. Be the first to comment!</p>
+		</div>
+
+		<!-- Form for adding a new comment -->
+		<form th:action="@{/posts/{id}/comments/add(id=${post.postId})}" method="post">
+			<div class="form-group">
+				<textarea name="content" class="form-control" placeholder="Add a comment..." required></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary mt-2">Add Comment</button>
+		</form>
+
+		<!-- Back to Profile or Home buttons -->
+		<div class="mt-4">
+			<a th:href="@{/profile}" class="btn btn-secondary">Back to Profile</a>
+			<a th:href="@{/home}" class="btn btn-primary">Back to Home</a>
+		</div>
+	</div>
+</body>
+
+</html>

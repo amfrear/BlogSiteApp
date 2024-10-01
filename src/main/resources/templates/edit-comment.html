@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<div class="container mt-5">
+		<h1>Edit Comment</h1>
+		<form
+			th:action="@{/posts/{postId}/comments/update/{commentId}(postId=${postId}, commentId=${comment.commentId})}"
+			method="post">
+			<div class="form-group">
+				<label for="content">Edit your comment:</label>
+				<textarea name="content" class="form-control" th:text="${comment.content}" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Save Changes</button>
+		</form>
+	</div>
+</body>
+
+</html>

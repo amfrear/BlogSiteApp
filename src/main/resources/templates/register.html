@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head"></th:block>
+
+<body>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<h2 class="text-center mt-5">Register</h2>
+				<form th:action="@{/register}" th:object="${user}" method="post">
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" id="username" th:field="*{username}" class="form-control"
+							placeholder="Enter username" required>
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" id="email" th:field="*{email}" class="form-control"
+							placeholder="Enter email" required>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" id="password" th:field="*{password}" class="form-control"
+							placeholder="Enter password" required>
+					</div>
+					<button type="submit" class="btn btn-primary">Register</button>
+
+					<!-- Cancel button to redirect back to the login page -->
+					<a th:href="@{/login}" class="btn btn-secondary ml-2">Cancel</a>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
